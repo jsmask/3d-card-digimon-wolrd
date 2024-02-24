@@ -78,7 +78,7 @@ function App() {
       <Suspense fallback={<Loader />}>
         <color attach="background" args={["#f0f0f0"]} />
         <Environment preset="city" />
-        <Frame id="01" name="Jesse" author="McCree">
+        <Frame id="01" name="神圣天女兽" level="究极体" type="疫苗种">
           <Sky />
           <Ophanimon position={[0, -2, -0.15]} />
           <Environment preset="city" />
@@ -100,7 +100,8 @@ function App() {
 function Frame({
   id,
   name,
-  author,
+  level,
+  type,
   bg,
   width = 1,
   height = GOLDENRATIO,
@@ -112,7 +113,7 @@ function Frame({
       <Text
         // font={suspend(medium).default}
         color="black"
-        fontSize={0.25}
+        fontSize={0.2}
         letterSpacing={-0.025}
         anchorY="top"
         anchorX="left"
@@ -126,18 +127,18 @@ function Frame({
         color="black"
         fontSize={0.1}
         anchorX="right"
-        position={[0.4, -0.659, 0.01]}
+        position={[0.4, -0.715, 0.01]}
       >
-        /{id}
+        {type}
       </Text>
       <Text
         // font={suspend(regular).default}
         color="black"
-        fontSize={0.04}
+        fontSize={0.1}
         anchorX="left"
-        position={[0.0, -0.677, 0.01]}
+        position={[-0.375, -0.715, 0.01]}
       >
-        {author}
+        {level}
       </Text>
       <mesh name={id}>
         <roundedPlaneGeometry args={[width, height, 0.1]} />
