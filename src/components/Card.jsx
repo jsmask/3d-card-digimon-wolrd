@@ -28,7 +28,7 @@ import {
 } from "@react-three/drei";
 // import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass";
 // import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass";
-import { Suspense, useEffect, useRef, useState,forwardRef } from "react";
+import { Suspense, useEffect, useRef, useState, forwardRef } from "react";
 import { easing, geometry } from "maath";
 import { useRoute, useLocation } from "wouter";
 
@@ -63,8 +63,10 @@ export function Card({
     const [hovered, hover] = useState(false)
     return (
         <group {...props}
-            onPointerOver={(e) => (e.stopPropagation(), hover(true))}
-            onPointerOut={() => hover(false)}>
+            // onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+            // onPointerOut={() => hover(false)}
+            onClick = {() => hover(!hovered)}
+            >
             <Frame
                 id={id}
                 name={name}
@@ -73,10 +75,10 @@ export function Card({
                 borderColor={borderColor}
             >
                 <Sky />
-                <Ophanimon actived={hovered} />
+                <Model actived={hovered} />
                 <Environment preset="city" />
             </Frame>
-            <Ophanimon clip actived={hovered} />
+            <Model clip actived={hovered} />
         </group>
     )
 }

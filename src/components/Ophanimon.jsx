@@ -12,7 +12,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 const zPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-const yPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 1);
+const yPlane = new THREE.Plane(new THREE.Vector3(0, 0.5, 0), 1);
 
 export function Ophanimon({ clip, actived, ...props }) {
   const group = useRef();

@@ -74,7 +74,7 @@ function App() {
   return (
     <Canvas
       gl={{ localClippingEnabled: true }}
-      camera={{ fov: 75, position: [0, 0, 2] }}
+      camera={{ fov: 75, position: [0, 0, 1.5] }}
       eventSource={document.getElementById("root")}
       eventPrefix="client"
     >
@@ -82,7 +82,7 @@ function App() {
         <color attach="background" args={["#110715"]} />
         <Stars radius={80} depth={50} count={5000} factor={4} saturation={0} fade speed={2} />
         <Environment preset="city" />
-        <Card id="01" name="神圣天女兽" level="究极体" type="疫苗种" borderColor="#CC99DD" Model={Ophanimon} position={[0, 0, 0]} rotation={[0, 0, 0]}></Card>
+        <Card id="01" name="神圣天女兽" level="究极体" type="疫苗种" borderColor="#50A1A2" Model={Ophanimon} position={[0, 0, 0]} rotation={[0, 0, 0]}></Card>
         <CameraControls
           makeDefault
           minAzimuthAngle={-Math.PI / 2.5}
@@ -91,7 +91,7 @@ function App() {
           maxPolarAngle={Math.PI / 2}
         />
       </Suspense>
-      <Stats />
+      {/* <Stats /> */}
     </Canvas>
   );
 }
