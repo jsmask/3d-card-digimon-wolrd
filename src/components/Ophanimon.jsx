@@ -6,20 +6,21 @@ License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 Source: https://sketchfab.com/3d-models/mobile-digimon-new-century-ophanimon-x-a715638fcdf740b0b77ff4bdd9f4bfb6
 Title: Mobile - Digimon New Century - Ophanimon X
 */
+
 import * as THREE from "three";
 import React, { useRef, useEffect, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 const zPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-const yPlane = new THREE.Plane(new THREE.Vector3(0, 0.5, 0), 1);
+const yPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 1);
 
-export function Ophanimon({ clip, ...props }) {
+export function Ophanimon({ clip, actived, ...props }) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF(
     "/models/ophanimon/scene.gltf"
   );
-  const [index, setIndex] = useState(22);
-  const { actions, names } = useAnimations(animations, group);
+  const [index, setIndex] = useState(9);
+  const { actions, names, mixer } = useAnimations(animations, group);
   // let body0 =  materials.body_0_p.clone()
   // let body1 =  materials.body_1_p.clone()
 
@@ -31,14 +32,24 @@ export function Ophanimon({ clip, ...props }) {
   // }, [clip]);
 
   useEffect(() => {
-    actions[names[index]].reset().fadeIn(0.5).play();
-    console.log(names);
-    return () => actions[names[index]].fadeOut(0.5);
-  }, [index, actions, names]);
+    if(actived) {
+      actions[names[22]].reset().fadeIn(0.2).play();
+      return () => actions[names[22]].fadeOut(0.2);
+    }
+    else {
+      actions[names[9]].reset().fadeIn(0.2).play();
+      return () => actions[names[9]].fadeOut(0.2);
+    }
+  }, [actived])
+
+  // useEffect(() => {
+  //   actions[names[index]].reset().fadeIn(0.5).play();
+  //   return () => actions[names[index]].fadeOut(0.5);
+  // }, [actions, names]);
 
   return (
-    <group ref={group} {...props} dispose={null}>
-      <group name="Sketchfab_Scene" scale={60} position={[0, 0.8, -0]}>
+    <group ref={group} {...props} dispose={null} position={[0, -2, -0.15]}>
+      <group name="Sketchfab_Scene" scale={60} position={[0, 0.7, -0]}>
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group name="x115_pfbx" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
             <group name="Object_2">
@@ -53,14 +64,14 @@ export function Ophanimon({ clip, ...props }) {
                     // material={materials.body_0_p}
                     skeleton={nodes.Object_7.skeleton}
                   >
-                    <meshStandardMaterial  map={materials.body_0_p.map} side={THREE.DoubleSide} clippingPlanes={clip ? [zPlane, yPlane] : null} />
+                    <meshStandardMaterial map={materials.body_0_p.map} side={THREE.DoubleSide} clippingPlanes={clip ? [zPlane, yPlane] : null} />
                   </skinnedMesh>
                   <skinnedMesh
                     name="Object_9"
                     geometry={nodes.Object_9.geometry}
                     skeleton={nodes.Object_9.skeleton}
                   >
-                     <meshStandardMaterial  map={materials.body_1_p.map} side={THREE.DoubleSide} clippingPlanes={clip ? [zPlane, yPlane] : null} />
+                    <meshStandardMaterial map={materials.body_1_p.map} side={THREE.DoubleSide} clippingPlanes={clip ? [zPlane, yPlane] : null} />
                   </skinnedMesh>
                 </group>
               </group>

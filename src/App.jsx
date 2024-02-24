@@ -24,6 +24,10 @@ import {
   useProgress,
   Effects,
   Stats,
+  Points,
+  PointMaterial,
+  useTexture,
+  Stars,
 } from "@react-three/drei";
 // import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass";
 // import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass";
@@ -39,15 +43,14 @@ import {
   DepthOfField,
 } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-
+import { suspend } from 'suspend-react'
 import { Ophanimon } from "./components/Ophanimon";
+import { Card } from "./components/Card";
 
-// extend({ GlitchPass, BloomPass });
+import * as random from 'maath/random/dist/maath-random.esm'
+
 extend(geometry);
 
-const GOLDENRATIO = 1.61803398875;
-// const regular = import('@pmndrs/assets/fonts/inter_regular.woff')
-// const medium = import('@pmndrs/assets/fonts/inter_medium.woff')
 
 function Loader() {
   const { progress } = useProgress();
@@ -71,19 +74,15 @@ function App() {
   return (
     <Canvas
       gl={{ localClippingEnabled: true }}
-      camera={{ fov: 75, position: [0, 0, 1.5] }}
+      camera={{ fov: 75, position: [0, 0, 2] }}
       eventSource={document.getElementById("root")}
       eventPrefix="client"
     >
       <Suspense fallback={<Loader />}>
-        <color attach="background" args={["#f0f0f0"]} />
+        <color attach="background" args={["#110715"]} />
+        <Stars radius={80} depth={50} count={5000} factor={4} saturation={0} fade speed={2} />
         <Environment preset="city" />
-        <Frame id="01" name="神圣天女兽" level="究极体" type="疫苗种">
-          <Sky />
-          <Ophanimon position={[0, -2, -0.15]} />
-          <Environment preset="city" />
-        </Frame>
-        <Ophanimon clip position={[0, -2, -0.15]} />
+        <Card id="01" name="神圣天女兽" level="究极体" type="疫苗种" borderColor="#CC99DD" Model={Ophanimon} position={[0, 0, 0]} rotation={[0, 0, 0]}></Card>
         <CameraControls
           makeDefault
           minAzimuthAngle={-Math.PI / 2.5}
@@ -97,59 +96,24 @@ function App() {
   );
 }
 
-function Frame({
-  id,
-  name,
-  level,
-  type,
-  bg,
-  width = 1,
-  height = GOLDENRATIO,
-  children,
-  ...props
-}) {
-  return (
-    <group {...props}>
-      <Text
-        // font={suspend(medium).default}
-        color="black"
-        fontSize={0.2}
-        letterSpacing={-0.025}
-        anchorY="top"
-        anchorX="left"
-        lineHeight={0.8}
-        position={[-0.375, 0.715, 0.01]}
-      >
-        {name}
-      </Text>
-      <Text
-        // font={suspend(regular).default}
-        color="black"
-        fontSize={0.1}
-        anchorX="right"
-        position={[0.4, -0.715, 0.01]}
-      >
-        {type}
-      </Text>
-      <Text
-        // font={suspend(regular).default}
-        color="black"
-        fontSize={0.1}
-        anchorX="left"
-        position={[-0.375, -0.715, 0.01]}
-      >
-        {level}
-      </Text>
-      <mesh name={id}>
-        <roundedPlaneGeometry args={[width, height, 0.1]} />
-        <MeshPortalMaterial>{children}</MeshPortalMaterial>
-      </mesh>
-      <mesh name={id} position={[0, 0, -0.001]}>
-        <roundedPlaneGeometry args={[width + 0.05, height + 0.05, 0.12]} />
-        <meshBasicMaterial color="black" />
-      </mesh>
-    </group>
-  );
-}
+// function Stars(props) {
+//   const ref = useRef()
+//   const star = useTexture("textures/star.png")
+//   const [sphere] = useState(() =>
+//     random.inSphere(new Float32Array(5000), { radius: 50 })
+//   )
+
+//   useFrame((state, delta) => {
+//     ref.current.rotation.x -= delta / 10
+//     ref.current.rotation.y -= delta / 15
+//   })
+//   return (
+//     <group rotation={[0, 0, Math.PI / 4]}>
+//       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
+//         <PointMaterial transparent color="#FFFFFF" map={star} size={0.1} sizeAttenuation={true} depthWrite={false} />
+//       </Points>
+//     </group>
+//   )
+// }
 
 export default App;
